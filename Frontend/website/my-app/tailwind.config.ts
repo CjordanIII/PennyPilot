@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage:{
+        'custom-bg':"url(/assets/background/loginBackground.jpg)"
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
