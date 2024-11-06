@@ -1,7 +1,9 @@
 import { GeistSans } from "geist/font/sans";
 import Image from "next/image";
+import Link from "next/link";
 
 const page = () => {
+  // TODO add routes to links
   const LOGO_SIZE: number = 900;
   return (
     <div
@@ -26,34 +28,36 @@ const page = () => {
         <div className="flex flex-col items-center mt-4 bg-white w-3/6 rounded-2xl py-10 self-center mb-10">
           <h6 className="text-2xl py-5">Log In</h6>
           <hr className=" w-3/5 border-[#F5F5F5] border-1" />
-          <div className="flex gap-3 py-5">
+          <div className="flex gap-5 py-5">
             <Image
               src="/assets/icons/email.svg"
               loading="lazy"
+              priority={false}
               className="w-10"
               width={LOGO_SIZE}
               height={LOGO_SIZE}
               alt="Email"
             />
-            <p className="text-2xl">Login with email</p>
+            <Link href="#" className="text-2xl">Login with email</Link>
           </div>
           {/* TODO change to color custom white */}
           <hr className=" w-3/5 border-[#F5F5F5] border-1" />
-          <div className="flex gap-3 mt-2 py-5">
+          <div className="flex gap-5 mt-2 py-5 items-center">
             <Image
               src="/assets/icons/google.svg"
               loading="lazy"
-              className="w-10"
+              priority={false}
+              className="w-10 "
               width={LOGO_SIZE}
               height={LOGO_SIZE}
               alt="Google logo"
             />
-            <p className="text-2xl">Login with Google</p>
+            <Link href="#" className="text-2xl">Login with Google</Link>
           </div>
         </div>
         <div className="text-white">
-          <p className="text-xl">Don't have an account?</p>
-          <p className="font-medium text-2xl">Sign up</p>
+          <p className="text-2xl my-4 font-normal">Don't have an account?</p>
+          <Link href="#" className="font-medium text-4xl">Sign up</Link>
         </div>
       </div>
     </div>
