@@ -1,17 +1,19 @@
 import SectionOne from "@/components/sections/landing_page/SectionOne";
 import SectionTwo from "@/components/sections/landing_page/SectionTwo";
-
+import SectionThree from "@/components/sections/landing_page/SectionThree";
 const page = () => {
   return (
     <div>
       <div className="mb-5">
       <SectionOne />
       </div>
-      <div className="mb-5 ml-10 w-11/12">
+      <div className="mb-24 ml-10 w-11/12">
         <SectionTwo />
       </div>
 
-     
+      <div>
+        <SectionThree/>
+      </div>
     </div>
   );
 };
