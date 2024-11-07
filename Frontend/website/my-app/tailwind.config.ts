@@ -19,6 +19,7 @@ const config: Config = {
         bricolage: ['Bricolage Grotesque', 'sans-serif']
       },
       colors: {
+        offwhite:"#F5F5F5",
         darkblue: "#2A7EC9",
         midblue: "#98B0FF",
       },
