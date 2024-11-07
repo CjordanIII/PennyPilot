@@ -1,8 +1,9 @@
+"use server"
 import Image from "next/image";
 import React from "react";
 import { GeistSans } from "geist/font/sans";
 import AiSuggestions from "./AiSuggestions";
-
+import {sendAiInputQuery} from "@/actions/ai.actions"
 const AiChatBot = () => {
   const ICON_SIZE: number = 100;
   const ARROW_ICON_SIZE:number = 15;
@@ -22,8 +23,9 @@ const AiChatBot = () => {
         </h2>
       </div>
 
-      <form className="w-full flex justify-center relative mb-10">
+      <form className="w-full flex justify-center relative mb-10" action={sendAiInputQuery}>
         <input
+        name="aiquery"
           placeholder="Get PennyPilot up to speed"
           className={`${GeistSans.className}  w-2/4 py-4 pl-5 rounded-full focus:outline-none`}
         />
@@ -34,7 +36,6 @@ const AiChatBot = () => {
             width={ARROW_ICON_SIZE}
             height={ARROW_ICON_SIZE}
             src="assets/svgs/up.svg"
-            
             alt="up arrow"
             loading="lazy"
             className="p-0 m-0"
