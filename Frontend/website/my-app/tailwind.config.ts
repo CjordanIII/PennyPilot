@@ -8,12 +8,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      scale: {
+        'small': '.97',
+       " xl-small":".97"
+      },
       backgroundImage:{
         'custom-bg':"url(/assets/background/loginBackground.jpg)"
       },
+      fontFamily:{
+        bricolage: ['Bricolage Grotesque', 'sans-serif']
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        darkblue: "#2A7EC9",
+        midblue: "#98B0FF",
       },
     },
   },
