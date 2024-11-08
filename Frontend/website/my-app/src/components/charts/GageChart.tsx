@@ -12,16 +12,20 @@ const GageChart = () => {
           title: {
             offsetCenter: ['0%', '-20%']
           },
+          
           progress: {
+            
             show: true,
             overlap: false,
             roundCap: true,
             clip: false,
             itemStyle: {
               borderWidth: 1,
-              color: '#FFA500'
+              color: '#FFA500',
+              
             }
           },
+        
           detail: {
             color:"#000000",
             
@@ -53,27 +57,35 @@ const GageChart = () => {
         // }
       ];
       const option = {
+     
         series: [
+          
           {
+            
+            
              type: 'gauge',
             startAngle: 90,
             endAngle: -270,
             pointer: {
               show: false
             },
+          
             progress: {
+              
               show: true,
               overlap: false,
               roundCap: true,
               clip: false,
               itemStyle: {
                 borderWidth: 1,
-                borderColor: '#464646'
+                borderColor: '#FFA500',
+                
               }
             },
             axisLine: {
               lineStyle: {
                 width: 40
+                
               }
             },
             splitLine: {
@@ -89,15 +101,18 @@ const GageChart = () => {
               distance: 50
             },
             data: gaugeData,
+          
             title: {
               fontSize: 14
             },
+           
             detail: {
               width: 50,
               height: 14,
               fontSize: 14,
               color: 'inherit',
               borderColor: 'inherit',
+            
               borderRadius: 20,
               borderWidth: 1,
               formatter: '{value}%'
