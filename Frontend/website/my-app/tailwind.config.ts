@@ -22,6 +22,7 @@ const config: Config = {
         offwhite:"#F5F5F5",
         darkblue: "#2A7EC9",
         midblue: "#98B0FF",
+        logoblue:"#2A7EC9"
       },
     },
   },
