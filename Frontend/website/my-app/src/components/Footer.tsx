@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { GeistSans } from "geist/font/sans";
 import Link from "next/link";
+import SocialMediaLinks from "./SocialMediaLinks";
 
 const Footer = () => {
   const PHOTO_SIZE: number = 300;
@@ -42,6 +43,7 @@ const Footer = () => {
                 Install Chrome Extension
             </p>
         </button>
+        <SocialMediaLinks/>
       </div>
     </div>
   );
