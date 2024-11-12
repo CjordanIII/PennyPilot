@@ -1,4 +1,4 @@
-interface socialMedia{
+interface mapConstraintTypes{
     name:string,
     src:string,
     alt:string,
@@ -6,7 +6,8 @@ interface socialMedia{
 }
 
 
-export const socialMedia:socialMedia[]= [{
+
+export const socialMedia:mapConstraintTypes[]= [{
     name:"twitter",
     src:"/assets/jpegs/xSocialIcon.jpg",
     alt:"twitter logo",
@@ -30,4 +31,41 @@ export const socialMedia:socialMedia[]= [{
     alt:"instagram",
     href:"#"
 }
+]
+
+export const navBarMetaData:mapConstraintTypes[] = [
+    {
+        name:"Overview",
+        src:"/assets/jpegs/xSocialIcon.jpg",
+        alt:"square with lines",
+        href:"#"
+    },
+    {
+        name:"Chat",
+        src:"/assets/jpegs/xSocialIcon.jpg",
+        alt:"chat",
+        href:"#"
+    },{
+        name:"Savings Goals",
+        src:"/assets/jpegs/xSocialIcon.jpg",
+        alt:"target",
+        href:"#"
+    },{
+        name:"Budget & Insights",
+        src:"/assets/jpegs/xSocialIcon.jpg",
+        alt:"graph",
+        href:"#"
+    },
+    {
+        name:"Expenses",
+        src:"/assets/jpegs/xSocialIcon.jpg",
+        alt:"cash",
+        href:"#"
+    },
+    {
+        name:"Settings",
+        src:"/assets/jpegs/xSocialIcon.jpg",
+        alt:"gear",
+        href:"#"
+    }
 ]
