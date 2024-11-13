@@ -25,7 +25,8 @@ const config: Config = {
         logoblue:"#2A7EC9",
         lightgrey:"#717680",
         whiteblue:"#F5FAFF",
-        customblack:"#1D1B20"
+        customblack:"#1D1B20",
+        navhoverbackground:"#E8EEFA"
       },
     },
   },
