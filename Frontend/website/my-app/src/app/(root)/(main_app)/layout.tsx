@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Footer from "@/components/Footer";
-import "./globals.css";
 
+import SideNavBar from "@/components/sidebar/SideNavBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,14 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <main className="bg-whiteblue h-[100vh] w-full">
+      <div className="flex justify-between">
+        <SideNavBar />
         {children}
-        <footer>
-        {/* <Footer/> */}
-      </footer>
-      </body>
-    
-    </html>
+      </div>
+    </main>
   );
 }
