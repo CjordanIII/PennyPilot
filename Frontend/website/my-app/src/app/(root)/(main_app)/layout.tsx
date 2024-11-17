@@ -13,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="bg-whiteblue h-[100vh] w-full">
-      <div className="flex justify-between">
+    <main className="bg-whiteblue h-[100vh]">
+      <div className="flex justify-between ">
         <SideNavBar />
         {children}
       </div>

@@ -5,7 +5,7 @@ import NavLinks from './NavLinks'
 // 
 const Navbar = () => {
   return (
-    <div className='bg-white w-60 h-[85vh] rounded-xl shadow-xl'>
+    <div className='bg-white w-60 h-[75vh] rounded-xl shadow-xl'>
       <div className='flex justify-center mt-10 '>
       <div className='flex flex-col justify-center gap-2'>
        {
