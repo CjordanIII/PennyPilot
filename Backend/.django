@@ -1,17 +1,133 @@
+from django.db import models
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .ai_service import process_query
 
+# Models
+
+class SavingsGoal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    target = models.DecimalField(max_digits=10, decimal_places=2)
+    current = models.DecimalField(max_digits=10, decimal_places=2)
+    start_date = models.DateField()
+    projected_completion = models.DateField()
+
+    def __str__(self):
+        return f"{self.user.username}'s goal: {self.name}"
+
+class Transaction(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    description = models.CharField(max_length=200)
+    category = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.user.username}'s transaction: {self.description} on {self.date}"
+
+class Budget(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    details = models.TextField()
+
+    def __str__(self):
+        return f"{self.user.username}'s budget: {self.name}"
+
+# Extend the User model to include financial information
+User.add_to_class('balance', models.DecimalField(max_digits=10, decimal_places=2, default=0))
+User.add_to_class('savings', models.DecimalField(max_digits=10, decimal_places=2, default=0))
+User.add_to_class('income', models.DecimalField(max_digits=10, decimal_places=2, default=0))
+User.add_to_class('expenses', models.DecimalField(max_digits=10, decimal_places=2, default=0))
+
+# Views
+
 @csrf_exempt
 def search(request):
-    #Request Method Check
     if request.method == 'POST':
-        #Data Extraction
         data = json.loads(request.body)
         query = data.get('query', '')
-        #Data Extraction
-        response = process_query(query)
-        #Response
-        return JsonResponse(response)
+        user_id = data.get('user_id')
 
+        try:
+            user = User.objects.get(id=user_id)
+            user_data = {
+                'balance': user.balance,
+                'savings': user.savings,
+                'income': user.income,
+                'expenses': user.expenses,
+                'savings_goals': list(SavingsGoal.objects.filter(user=user).values('name', 'target', 'current', 'start_date', 'projected_completion')),
+                'transactions': list(Transaction.objects.filter(user=user).order_by('-date')[:10].values()),
+                'budget': Budget.objects.filter(user=user).first()
+            }
+
+            result = process_query(query, user_data)
+            return JsonResponse({
+                'summarized_response': result['response'],
+                'full_response': result['full_response']
+            })
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+# Additional views for CRUD operations
+
+@csrf_exempt
+def add_transaction(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        try:
+            user = User.objects.get(id=user_id)
+            transaction = Transaction.objects.create(
+                user=user,
+                date=data['date'],
+                description=data['description'],
+                category=data['category'],
+                amount=data['amount'],
+                status=data['status']
+            )
+            return JsonResponse({'message': 'Transaction added successfully', 'id': transaction.id})
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def update_savings_goal(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        goal_id = data.get('goal_id')
+        try:
+            goal = SavingsGoal.objects.get(id=goal_id)
+            goal.current = data['current']
+            goal.save()
+            return JsonResponse({'message': 'Savings goal updated successfully'})
+        except SavingsGoal.DoesNotExist:
+            return JsonResponse({'error': 'Savings goal not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def update_budget(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        try:
+            user = User.objects.get(id=user_id)
+            budget, created = Budget.objects.get_or_create(user=user)
+            budget.name = data['name']
+            budget.details = data['details']
+            budget.save()
+            return JsonResponse({'message': 'Budget updated successfully'})
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+# We would need to implement the ai_service.py file with the process_query function
+# This function should handle the AI processing using Gemini API and any summarization logic
