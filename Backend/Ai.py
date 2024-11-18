@@ -3,10 +3,10 @@ import json
 import requests  # For making HTTP requests to the summarizer API
 
 # Configure Gemini API
-genai.configure(api_key="AIzaSyD0R8aLBFExYczTQu4cleTZ6UvSliUxjZE")
+genai.configure(api_key="")
 
 # Google built-in-Ai Summarizer API key and endpoint
-SUMMARIZER_API_KEY = "AgrNlFWVWAR8s380OJn70JiuVRUTAun5Zx8w0paLRpOj2kEWx5KZokCAyCcT5TqA/433aG1yQ4L4AL/ZcOAeEgYAAABzeyJvcmlnaW4iOiJodHRwczovL2RldmVsb3Blci5jaHJvbWUuY29tOjQ0MyIsImZlYXR1cmUiOiJBSVN1bW1hcml6YXRpb25BUEkiLCJleHBpcnkiOjE3NTMxNDI0MDAsImlzU3ViZG9tYWluIjp0cnVlfQ=="
+SUMMARIZER_API_KEY = ""
 SUMMARIZER_API_ENDPOINT = "https://api.summarizer.com/v1/summarize"
 
 def process_query(query, user_data):
