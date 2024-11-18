@@ -1,7 +1,22 @@
 "use client"
 import ReactECharts from 'echarts-for-react';
+import { LineCharttypes } from '@/lib/interfaces';
 // TODO mke this more dynamic
-const LineChart = () => {
+const LineChart:React.FC<LineCharttypes> = ({series=[],xAxis={},yAxis={}}) => {
+  // series{
+  //   name:"Planned",
+  //   data: [820, 932, 901, 934, 1290, 1330, 1320],
+  //   type: 'line',
+  //   smooth: true,
+  // },
+  // xAxis: {
+  //   type: 'category',
+  //   data: ['January', 'Ferbuary', 'March', 'April', 'May', 'June', 'July'],
+  // },
+  // yAxis: {
+  //   type: 'value',
+  // },
+
     const options = {
         toolbox: {
             feature: {
@@ -10,27 +25,9 @@ const LineChart = () => {
             }
         },
         grid: { top: 8, right: 8, bottom: 24, left: 36 },
-        xAxis: {
-          type: 'category',
-          data: ['January', 'Ferbuary', 'March', 'April', 'May', 'June', 'July'],
-        },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            name:"Planned",
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line',
-            smooth: true,
-          },
-          {
-            name:"Actual",
-            data: [480, 750, 1080, 840, 1548, 1596, 1056],
-            type: 'line',
-            smooth: true,
-          },
-        ],
+        xAxis:xAxis,
+        yAxis: yAxis,
+        series: series,
         legend:{
             show:true
         },

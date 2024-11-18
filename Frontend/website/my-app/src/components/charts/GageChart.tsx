@@ -1,19 +1,18 @@
 "use client";
 import ReactECharts from "echarts-for-react";
-import { title } from "process";
-import { styleText } from "util";
-import { text } from "zrender/lib/svg-legacy/graphic.js";
+import {GageChartTypes} from "@/lib/interfaces"
+
 // TODO mke this more dynamic
-const GageChart = ({title="default",value=10}) => {
+const GageChart:React.FC<GageChartTypes> = ({name="no name",value,fontSize}) => {
   const gaugeData = [
     {
       value: value,
 
-      name: title,
+      name: name,
       title: {
         offsetCenter: ["0%", "-20%"],
         textStyle:{
-          fontSize:80
+          fontSize:fontSize
         }
       },
 
@@ -98,13 +97,13 @@ const GageChart = ({title="default",value=10}) => {
         data: gaugeData,
 
         title: {
-          fontSize: 30,
+          fontSize: fontSize,
         },
 
         detail: {
           width: 50,
           height: 14,
-          fontSize: 30,
+          fontSize: fontSize,
           color: "inherit",
           borderColor: "inherit",
           formatter: "{value}%",
