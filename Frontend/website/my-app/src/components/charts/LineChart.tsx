@@ -1,6 +1,6 @@
 "use client"
 import ReactECharts from 'echarts-for-react';
-
+// TODO mke this more dynamic
 const LineChart = () => {
     const options = {
         toolbox: {
