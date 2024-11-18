@@ -3,7 +3,7 @@ import ReactECharts from "echarts-for-react";
 import {GageChartTypes} from "@/lib/interfaces"
 
 // TODO mke this more dynamic
-const GageChart:React.FC<GageChartTypes> = ({name="no name",value,fontSize}) => {
+const GageChart:React.FC<GageChartTypes> = ({name="no name",value=0,fontSize}) => {
   const gaugeData = [
     {
       value: value,

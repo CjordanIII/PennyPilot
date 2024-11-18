@@ -13,18 +13,18 @@ const SectionThree = () => {
 // data for gage chart
 const gageChart:GageChartServicesTypes = gaugeChart()
 const gageChartName:string | undefined = gageChart.data.name
-const gageChartValue: number = gageChart.data.value
+const gageChartValue: number |undefined = gageChart.data.value
 const gagechartTable:string |undefined= gageChart.data.title
 
   return (
     <div className="flex justify-around  mb-5">
-      <div className="w-6/12 p-10  bg-offwhite rounded-3xl shadow-sm">
+      <div className="w-6/12 p-10  bg-white rounded-3xl shadow-sm">
         <LineChart series={lineChartSeries} xAxis={lineChartxAxis} yAxis={lineChartyAxis} />
         <h1 className="font-bricolage text-4xl text-center py-10 ">
           {lineChartName}
         </h1>
       </div>
-      <div className="w-2/5  bg-offwhite rounded-3xl shadow-sm">
+      <div className="w-2/5  bg-white rounded-3xl shadow-sm">
         <div className="h-96">
           <GageChart name={gageChartName} value={gageChartValue} fontSize={25} />
           <h1 className="font-bricolage text-4xl text-center py-8 ">

@@ -14,11 +14,13 @@ export default function RootLayout({
   
 }>) {
   return (
-    <main className="flex h-[100vh]">
-      <aside className="flex items-center justify-around h-full">
+    <main className="flex h-[100vh] w-[100vw] gap-32" >
+      <aside className="flex items-center  h-full">
         <SideNavBar />
       </aside>
+      <div className="flex w-full h-full items-center justify-center">
       {children}
+      </div>
     </main>
   );
 }

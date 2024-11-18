@@ -1,9 +1,10 @@
-import React from 'react'
-
+import SavingsGoals from "@/components/sections/overview_page/SavingsGoals";
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div className="w-auto h-auto">
+      <SavingsGoals />
+    </div>
+  );
+};
 
-export default page
+export default page;

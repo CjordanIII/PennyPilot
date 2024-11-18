@@ -31,7 +31,7 @@ export interface LinechartServicesTypes{
 export interface GageChartTypes{
     title?:string,
     name?:string,
-    value:number,
+    value?:number,
     fontSize?:number
 
 }
