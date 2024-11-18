@@ -1,6 +1,0 @@
-*.ts
-*.json
-
-venv/
-input/*.django
-input/*Ai.py
