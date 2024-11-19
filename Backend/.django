@@ -1,11 +1,6 @@
+# models.py
 from django.db import models
 from django.contrib.auth.models import User
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
-from .ai_service import process_query
-
-# Models
 
 class SavingsGoal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -14,12 +9,14 @@ class SavingsGoal(models.Model):
     current = models.DecimalField(max_digits=10, decimal_places=2)
     start_date = models.DateField()
     projected_completion = models.DateField()
+    progress = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.user.username}'s goal: {self.name}"
 
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ref_id = models.CharField(max_length=50, unique=True)
     date = models.DateField()
     description = models.CharField(max_length=200)
     category = models.CharField(max_length=100)
@@ -33,17 +30,29 @@ class Budget(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     details = models.TextField()
+    spending_limit = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"{self.user.username}'s budget: {self.name}"
 
-# Extend the User model to include financial information
-User.add_to_class('balance', models.DecimalField(max_digits=10, decimal_places=2, default=0))
-User.add_to_class('savings', models.DecimalField(max_digits=10, decimal_places=2, default=0))
-User.add_to_class('income', models.DecimalField(max_digits=10, decimal_places=2, default=0))
-User.add_to_class('expenses', models.DecimalField(max_digits=10, decimal_places=2, default=0))
+class UserFinancials(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    savings = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    income = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    expenses = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-# Views
+    def __str__(self):
+        return f"{self.user.username}'s financials"
+
+# views.py
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import User, SavingsGoal, Transaction, Budget, UserFinancials
+from .ai_service import process_query
+from django.db.models import Sum
+from datetime import datetime, timedelta
 
 @csrf_exempt
 def search(request):
@@ -54,12 +63,13 @@ def search(request):
 
         try:
             user = User.objects.get(id=user_id)
+            financials = UserFinancials.objects.get(user=user)
             user_data = {
-                'balance': user.balance,
-                'savings': user.savings,
-                'income': user.income,
-                'expenses': user.expenses,
-                'savings_goals': list(SavingsGoal.objects.filter(user=user).values('name', 'target', 'current', 'start_date', 'projected_completion')),
+                'balance': financials.balance,
+                'savings': financials.savings,
+                'income': financials.income,
+                'expenses': financials.expenses,
+                'savings_goals': list(SavingsGoal.objects.filter(user=user).values()),
                 'transactions': list(Transaction.objects.filter(user=user).order_by('-date')[:10].values()),
                 'budget': Budget.objects.filter(user=user).first()
             }
@@ -74,8 +84,6 @@ def search(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-# Additional views for CRUD operations
-
 @csrf_exempt
 def add_transaction(request):
     if request.method == 'POST':
@@ -85,6 +93,7 @@ def add_transaction(request):
             user = User.objects.get(id=user_id)
             transaction = Transaction.objects.create(
                 user=user,
+                ref_id=data['ref_id'],
                 date=data['date'],
                 description=data['description'],
                 category=data['category'],
@@ -105,6 +114,7 @@ def update_savings_goal(request):
         try:
             goal = SavingsGoal.objects.get(id=goal_id)
             goal.current = data['current']
+            goal.progress = int((goal.current / goal.target) * 100)
             goal.save()
             return JsonResponse({'message': 'Savings goal updated successfully'})
         except SavingsGoal.DoesNotExist:
@@ -122,6 +132,7 @@ def update_budget(request):
             budget, created = Budget.objects.get_or_create(user=user)
             budget.name = data['name']
             budget.details = data['details']
+            budget.spending_limit = data['spending_limit']
             budget.save()
             return JsonResponse({'message': 'Budget updated successfully'})
         except User.DoesNotExist:
@@ -129,5 +140,133 @@ def update_budget(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-# We would need to implement the ai_service.py file with the process_query function
-# This function should handle the AI processing using Gemini API and any summarization logic
+@csrf_exempt
+def get_line_chart_data(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        
+        try:
+            user = User.objects.get(id=user_id)
+            end_date = datetime.now()
+            start_date = end_date - timedelta(days=180)  # Last 6 months
+            
+            transactions = Transaction.objects.filter(
+                user=user, 
+                date__range=[start_date, end_date]
+            ).order_by('date')
+            
+            monthly_data = {}
+            for transaction in transactions:
+                month = transaction.date.strftime('%B')
+                if month not in monthly_data:
+                    monthly_data[month] = {'actual': 0, 'planned': 0}
+                monthly_data[month]['actual'] += transaction.amount
+            
+            # You'll need to implement logic for 'planned' spending
+            # This is a placeholder
+            for month in monthly_data:
+                monthly_data[month]['planned'] = monthly_data[month]['actual'] * 1.1
+            
+            chart_data = {
+                "data": {
+                    "name": "Track your spending",
+                    "series": [
+                        {
+                            "name": "Planned",
+                            "data": [monthly_data[month]['planned'] for month in monthly_data],
+                            "type": "line",
+                            "smooth": True,
+                        },
+                        {
+                            "name": "Actual",
+                            "data": [monthly_data[month]['actual'] for month in monthly_data],
+                            "type": "line",
+                            "smooth": True,
+                        }
+                    ],
+                    "xAxis": {
+                        "type": "category",
+                        "data": list(monthly_data.keys()),
+                    },
+                    "yAxis": {
+                        "type": "value",
+                    },
+                }
+            }
+            
+            return JsonResponse(chart_data)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def get_gauge_chart_data(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        goal_name = data.get('goal_name', 'New computer')
+        
+        try:
+            user = User.objects.get(id=user_id)
+            goal = SavingsGoal.objects.get(user=user, name=goal_name)
+            
+            gauge_data = {
+                "data": {
+                    "title": "Monitor your budget",
+                    "name": goal.name,
+                    "value": goal.progress
+                }
+            }
+            
+            return JsonResponse(gauge_data)
+        except (User.DoesNotExist, SavingsGoal.DoesNotExist):
+            return JsonResponse({'error': 'User or goal not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('search/', views.search, name='search'),
+    path('add_transaction/', views.add_transaction, name='add_transaction'),
+    path('update_savings_goal/', views.update_savings_goal, name='update_savings_goal'),
+    path('update_budget/', views.update_budget, name='update_budget'),
+    path('line_chart_data/', views.get_line_chart_data, name='line_chart_data'),
+    path('gauge_chart_data/', views.get_gauge_chart_data, name='gauge_chart_data'),
+]
+
+# ai_service.py
+import google.generativeai as genai
+from django.conf import settings
+
+genai.configure(api_key=settings.GEMINI_API_KEY)
+
+def process_query(query, user_data):
+    model = genai.GenerativeModel('gemini-pro')
+    
+    context = f"""
+    User's financial data:
+    Balance: ${user_data['balance']}
+    Savings: ${user_data['savings']}
+    Income: ${user_data['income']}
+    Expenses: ${user_data['expenses']}
+    
+    Savings Goals:
+    {', '.join([f"{goal['name']} (Progress: {goal['progress']}%)" for goal in user_data['savings_goals']])}
+    
+    Recent Transactions:
+    {', '.join([f"{t['description']} (${t['amount']})" for t in user_data['transactions'][:3]])}
+    
+    Respond to the following query based on this financial information: {query}
+    """
+    
+    response = model.generate_content(context)
+    
+    return {
+        'response': response.text[:100],  # Summarized response
+        'full_response': response.text
+    }
