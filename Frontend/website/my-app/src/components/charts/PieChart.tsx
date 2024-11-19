@@ -1,13 +1,11 @@
 "use client";
 import ReactECharts from "echarts-for-react";
+import {PiechartDataProps} from "@/lib/interfaces"
 
-const PieChart = ({ titleData, legend }) => {
+const PieChart:React.FC<PiechartDataProps> = ({ titleData, legendData,data }) => {
   const option = {
-    title: {
-      text: "Weather Statistics",
-      subtext: "Fake Data",
-      left: "center",
-    },
+    // dynaimc based on props
+    title: titleData,
     axisPointer: {
       show: false,
     },
@@ -15,7 +13,7 @@ const PieChart = ({ titleData, legend }) => {
       orient: "vertical",  // Arrange legend items vertically
       left: 10,            // Position the legend on the left side
       top: "middle",       // Align the legend in the middle vertically
-      data: ["CityA", "CityB", "CityD", "CityC", "CityE"],
+      data: legendData, // dynamic data baed on props
       textStyle: {
         color: "#000",     // Customize text color if needed
       },
@@ -31,12 +29,7 @@ const PieChart = ({ titleData, legend }) => {
         radius: "65%",
         center: ["50%", "50%"],  // Adjust center to accommodate legend
         selectedMode: "single",
-        data: [
-          { value: 735, name: "CityC" },
-          { value: 510, name: "CityD" },
-          { value: 434, name: "CityB" },
-          { value: 335, name: "CityA" },
-        ],
+        data: data, // dynamic data based on props
         emphasis: {
           itemStyle: {
             shadowBlur: 10,

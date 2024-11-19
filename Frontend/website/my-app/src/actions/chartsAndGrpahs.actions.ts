@@ -1,5 +1,5 @@
-import {lineChartData,gageCharts} from "@/services/charts.service"
-import {LinechartServicesTypes,GageChartServicesTypes} from "@/lib/interfaces"
+import {lineChartData,gageCharts,pieCharts} from "@/services/charts.service"
+import {LinechartServicesTypes,GageChartServicesTypes,PieCharts} from "@/lib/interfaces"
 
 export const lineChart = ():LinechartServicesTypes=>{
     return lineChartData()
@@ -7,4 +7,8 @@ export const lineChart = ():LinechartServicesTypes=>{
 
 export const gaugeChart = ():GageChartServicesTypes =>{
     return gageCharts()
+}
+
+export const pieChart = ():PieCharts =>{
+    return pieCharts()
 }

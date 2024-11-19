@@ -1,7 +1,14 @@
 import GageChart from '@/components/charts/GageChart'
 import PieChart from '@/components/charts/PieChart'
-
+import {pieChart} from "@/actions/chartsAndGrpahs.actions"
+import {PieCharts,PieChartTitle,PieData} from "@/lib/interfaces"
 const SavingsGoals = () => {
+  const piechart:PieCharts = pieChart()
+
+  const titleData:PieChartTitle = piechart.data.title
+  const legendData:string[] = piechart.data.legend.data
+  const data:PieData[]=piechart.data.data
+
   return (
     <section className="">
     <h1 className="text-2xl">Savings Goals</h1>
@@ -9,7 +16,7 @@ const SavingsGoals = () => {
       <GageChart title="" fontSize={25} />
     </div>
     <div>
-      <PieChart/>
+      <PieChart titleData={titleData} legendData={legendData} data={data}/>
     </div>
   </section>
   )
