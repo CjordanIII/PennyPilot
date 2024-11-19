@@ -1,10 +1,25 @@
 "use client";
 import ReactECharts from "echarts-for-react";
-import {PiechartDataProps} from "@/lib/interfaces"
+import { PiechartDataProps } from "@/lib/interfaces";
 
-const PieChart:React.FC<PiechartDataProps> = ({ titleData, legendData,data }) => {
+// Function to get colors (create own pallet dynamicly )
+const getColor = (index: number) => {
+  const colors = ["#8100E8", "#80B89D", "#FFAA4F", "#F89456", "#03A530"];
+  // repetes colors index is based on remainder
+  return colors[index % colors.length];
+};
+
+const PieChart: React.FC<PiechartDataProps> = ({ titleData, legendData, data }) => {
+  // Adding colors to each data segment
+  const coloredData = data.map((item, index) => ({
+    ...item,
+    itemStyle: {
+      color: getColor(index),  // Assign color based on index
+    },
+  }));
+
   const option = {
-    // dynaimc based on props
+    // dynamic based on props
     title: titleData,
     axisPointer: {
       show: false,
@@ -13,7 +28,7 @@ const PieChart:React.FC<PiechartDataProps> = ({ titleData, legendData,data }) =>
       orient: "vertical",  // Arrange legend items vertically
       left: 10,            // Position the legend on the left side
       top: "middle",       // Align the legend in the middle vertically
-      data: legendData, // dynamic data baed on props
+      data: legendData,    // dynamic data based on props
       textStyle: {
         color: "#000",     // Customize text color if needed
       },
@@ -29,7 +44,7 @@ const PieChart:React.FC<PiechartDataProps> = ({ titleData, legendData,data }) =>
         radius: "65%",
         center: ["50%", "50%"],  // Adjust center to accommodate legend
         selectedMode: "single",
-        data: data, // dynamic data based on props
+        data: coloredData,       // use colored data
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
@@ -52,6 +67,7 @@ const PieChart:React.FC<PiechartDataProps> = ({ titleData, legendData,data }) =>
       },
     ],
   };
+
   return <ReactECharts option={option} />;
 };
 

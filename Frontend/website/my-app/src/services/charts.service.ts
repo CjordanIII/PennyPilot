@@ -49,13 +49,13 @@ export const pieCharts = ():PieCharts=>{
         left: "center"
       },
       legend:{
-        data:["CityA", "CityB", "CityD", "CityC", "CityE"]
+        data:["ItemA", "ItemB", "ItemD", "ItemC", "ItemE"]
       },
       data:[
-        { value: 735, name: "CityC" },
-        { value: 510, name: "CityD" },
-        { value: 434, name: "CityB" },
-        { value: 335, name: "CityA" },
+        { value: 735, name: "ItemC" },
+        { value: 510, name: "ItemD" },
+        { value: 434, name: "ItemB" },
+        { value: 335, name: "ItemA" },
       ]
     }
   }
