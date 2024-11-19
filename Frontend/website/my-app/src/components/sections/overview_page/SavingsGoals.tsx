@@ -2,8 +2,9 @@ import GageChart from "@/components/charts/GageChart";
 
 const SavingsGoals = () => {
   return (
+    // TODO add data values
     <section>
-      <h1 className="text-2xl">Savings Goals</h1>
+      <h1 className="text-2xl pb-4">Savings Goals</h1>
       <div className="bg-white rounded-3xl shadow-sm flex flex-col items-center">
         <div className="w-96 h-96 slef-center">
           <GageChart  fontSize={25} lineStyleWidth={30} lineColor="#FF8C00" />
