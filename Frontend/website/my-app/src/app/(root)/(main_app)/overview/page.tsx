@@ -1,12 +1,13 @@
 import SavingsGoals from "@/components/sections/overview_page/SavingsGoals";
+import BugetGraph from "@/components/budget/BugetGraph";
 
 const page = () => {
-
-   
-
   return (
-    <div className="w-auto h-auto">
-      <SavingsGoals />
+    <div >
+      <div className="w-auto h-auto flex justify-evenly">
+        <BugetGraph />
+        <SavingsGoals />
+      </div>
     </div>
   );
 };

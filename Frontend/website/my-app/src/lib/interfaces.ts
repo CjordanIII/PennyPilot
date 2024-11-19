@@ -28,6 +28,10 @@ export interface LinechartServicesTypes {
 }
 
 export interface GageChartTypes {
+  lineColor?:string,
+  bkPercentColor?:string,
+  percentSize?:number,
+  lineStyleWidth?:number,
   title?: string;
   name?: string;
   value?: number;

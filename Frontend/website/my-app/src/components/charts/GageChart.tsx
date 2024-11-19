@@ -1,9 +1,9 @@
 "use client";
 import ReactECharts from "echarts-for-react";
-import {GageChartTypes} from "@/lib/interfaces"
+import {GageChartTypes} from "@/lib/interfaces";
 
 // TODO mke this more dynamic
-const GageChart:React.FC<GageChartTypes> = ({name="no name",value=0,fontSize}) => {
+const GageChart:React.FC<GageChartTypes> = ({name="no name",value=0,fontSize,lineStyleWidth=40,percentSize=30,lineColor="#FFA500",bkPercentColor="#000000"}) => {
   const gaugeData = [
     {
       value: value,
@@ -23,13 +23,13 @@ const GageChart:React.FC<GageChartTypes> = ({name="no name",value=0,fontSize}) =
         clip: false,
         itemStyle: {
           borderWidth: 1,
-          color: "#FFA500",
+          color: lineColor,
         },
       },
 
       detail: {
-        color: "#000000",
-
+        color: bkPercentColor,
+      
         valueAnimation: true,
         offsetCenter: ["0%", "10%"],
       },
@@ -74,12 +74,12 @@ const GageChart:React.FC<GageChartTypes> = ({name="no name",value=0,fontSize}) =
           clip: false,
           itemStyle: {
             borderWidth: 1,
-            borderColor: "#FFA500",
+            borderColor: lineColor,
           },
         },
         axisLine: {
           lineStyle: {
-            width: 40,
+            width: lineStyleWidth,
           },
         },
         splitLine: {
@@ -103,6 +103,7 @@ const GageChart:React.FC<GageChartTypes> = ({name="no name",value=0,fontSize}) =
         detail: {
           width: 50,
           height: 14,
+          textStyle: { fontSize: percentSize  },
           fontSize: fontSize,
           color: "inherit",
           borderColor: "inherit",

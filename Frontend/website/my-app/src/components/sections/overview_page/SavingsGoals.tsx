@@ -1,25 +1,24 @@
-import GageChart from '@/components/charts/GageChart'
-import PieChart from '@/components/charts/PieChart'
-import {pieChart} from "@/actions/chartsAndGrpahs.actions"
-import {PieCharts,PieChartTitle,PieData} from "@/lib/interfaces"
+import GageChart from "@/components/charts/GageChart";
+
 const SavingsGoals = () => {
-  const piechart:PieCharts = pieChart()
-
-  const titleData:PieChartTitle = piechart.data.title
-  const legendData:string[] = piechart.data.legend.data
-  const data:PieData[]=piechart.data.data
-
   return (
-    <section className="">
-    <h1 className="text-2xl">Savings Goals</h1>
-    <div className="w-96 h-96 bg-white rounded-3xl shadow-sm ">
-      <GageChart title="" fontSize={25} />
-    </div>
-    <div>
-      <PieChart titleData={titleData} legendData={legendData} data={data}/>
-    </div>
-  </section>
-  )
-}
+    <section>
+      <h1 className="text-2xl">Savings Goals</h1>
+      <div className="bg-white rounded-3xl shadow-sm flex flex-col items-center">
+        <div className="w-96 h-96 slef-center">
+          <GageChart  fontSize={25} lineStyleWidth={30} lineColor="#FF8C00" />
+        </div>
+        <div className="flex w-[30rem] h-[15rem] ">
+          <div className=" w-3/5 h-3/5">
+            <GageChart name="" fontSize={25} lineStyleWidth={10} percentSize={20} lineColor="#8B0000"/>
+          </div>
+          <div className="w-3/5 h-3/5">
+            <GageChart name="" fontSize={25} lineStyleWidth={10} percentSize={20} lineColor="#FF8C00"/>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-export default SavingsGoals
+export default SavingsGoals;

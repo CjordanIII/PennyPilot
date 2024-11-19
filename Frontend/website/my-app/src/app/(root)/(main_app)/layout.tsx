@@ -18,7 +18,7 @@ export default function RootLayout({
       <aside className="flex items-center  h-full">
         <SideNavBar />
       </aside>
-      <div className="flex w-full h-full items-center justify-center">
+      <div className=" w-full h-full  ">
       {children}
       </div>
     </main>
