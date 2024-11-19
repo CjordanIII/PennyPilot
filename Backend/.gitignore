@@ -1,0 +1,8 @@
+*.ts
+*.json
+
+venv/
+input/*.django
+input/*Ai.py
+input/*middleware.py
+input/*settings.py
