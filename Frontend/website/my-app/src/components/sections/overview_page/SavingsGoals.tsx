@@ -1,22 +1,22 @@
 import GageChart from "@/components/charts/GageChart";
 import { GeistSans } from "geist/font/sans";
+
 const SavingsGoals = () => {
+  const percentSize:number = 15
   return (
-    // TODO add data values
-    // TODO make dynamic
-    <section>
-      <h1 className="text-2xl pb-4">Savings Goals</h1>
-      <div className="bg-white rounded-3xl shadow-sm flex flex-col items-center">
-        <div className="w-96 h-96 slef-center">
-          <GageChart  fontSize={25} lineStyleWidth={30} lineColor="#FF8C00" />
+    <section className="w-full h-full flex flex-col items-center">
+      <h1 className="text-2xl pb-4 self-start">Savings Goals</h1>
+      <div className="bg-white rounded-3xl shadow-sm flex flex-col items-center w-full h-full">
+        <div className="w-full h-full self-center ">
+          <GageChart fontSize={25} lineStyleWidth={20} lineColor="#FF8C00" />
         </div>
-        <div className="flex w-[30rem] h-[15rem] justify-evenly ">
-          <div className=" w-3/5 h-3/5">
-            <GageChart name="" fontSize={25} lineStyleWidth={10} percentSize={20} lineColor="#8B0000"/>
+        <div className="flex w-full h-3/5 justify-evenly">
+          <div className="w-2/5 h-3/5">
+            <GageChart name=""  lineStyleWidth={10} percentSize={percentSize} lineColor="#8B0000" />
             <p className={`text-center ${GeistSans.className}`}>Camping trip</p>
           </div>
-          <div className="w-3/5 h-3/5">
-            <GageChart name="" fontSize={25} lineStyleWidth={10} percentSize={20} lineColor="#FF8C00"/>
+          <div className="w-2/5 h-3/5">
+            <GageChart name=""  lineStyleWidth={10} percentSize={percentSize} lineColor="#FF8C00" />
             <p className={`text-center ${GeistSans.className}`}>New computer</p>
           </div>
         </div>

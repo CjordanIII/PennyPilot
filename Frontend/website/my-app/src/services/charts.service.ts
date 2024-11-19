@@ -44,8 +44,8 @@ export const pieCharts = ():PieCharts=>{
   return {
     data:{
       title:{
-        text: "Weather Statistics",
-        subtext: "Fake Data",
+        text: "",
+        subtext: "",
         left: "center"
       },
       legend:{

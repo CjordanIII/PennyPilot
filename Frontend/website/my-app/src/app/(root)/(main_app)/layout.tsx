@@ -14,7 +14,7 @@ export default function RootLayout({
   
 }>) {
   return (
-    <main className="flex h-[100vh] w-[100vw] gap-32" >
+    <main className="flex h-[100vh] w-[100vw] " >
       <aside className="flex items-center  h-full">
         <SideNavBar />
       </aside>
