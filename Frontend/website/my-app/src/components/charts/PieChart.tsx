@@ -1,131 +1,65 @@
-"use client"
+"use client";
 import ReactECharts from "echarts-for-react";
-const PieChart = () => {
-   const option = {
-        title: {
-          text: 'Weather Statistics',
-          subtext: 'Fake Data',
-          left: 'center'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        legend: {
-          bottom: 10,
-          left: 'center',
-          data: ['CityA', 'CityB', 'CityD', 'CityC', 'CityE']
-        },
-        series: [
-          {
-            type: 'pie',
-            radius: '65%',
-            center: ['50%', '50%'],
-            selectedMode: 'single',
-            data: [
-              {
-                value: 1548,
-                name: 'CityE',
-                label: {
-                  formatter: [
-                    '{title|{b}}{abg|}',
-                    '  {weatherHead|Weather}{valueHead|Days}{rateHead|Percent}',
-                    '{hr|}',
-                    '  {Sunny|}{value|202}{rate|55.3%}',
-                    '  {Cloudy|}{value|142}{rate|38.9%}',
-                    '  {Showers|}{value|21}{rate|5.8%}'
-                  ].join('\n'),
-                  backgroundColor: '#eee',
-                  borderColor: '#777',
-                  borderWidth: 1,
-                  borderRadius: 4,
-                  rich: {
-                    title: {
-                      color: '#eee',
-                      align: 'center'
-                    },
-                    abg: {
-                      backgroundColor: '#333',
-                      width: '100%',
-                      align: 'right',
-                      height: 25,
-                      borderRadius: [4, 4, 0, 0]
-                    },
-                    Sunny: {
-                      height: 30,
-                      align: 'left',
-                      backgroundColor: {
-                       image: "na"
-                      }
-                    },
-                    Cloudy: {
-                      height: 30,
-                      align: 'left',
-                      backgroundColor: {
-                       image: "na"
-                      }
-                    },
-                    Showers: {
-                      height: 30,
-                      align: 'left',
-                      backgroundColor: {
-                        image: "na"
-                      }
-                    },
-                    weatherHead: {
-                      color: '#333',
-                      height: 24,
-                      align: 'left'
-                    },
-                    hr: {
-                      borderColor: '#777',
-                      width: '100%',
-                      borderWidth: 0.5,
-                      height: 0
-                    },
-                    value: {
-                      width: 20,
-                      padding: [0, 20, 0, 30],
-                      align: 'left'
-                    },
-                    valueHead: {
-                      color: '#333',
-                      width: 20,
-                      padding: [0, 20, 0, 30],
-                      align: 'center'
-                    },
-                    rate: {
-                      width: 40,
-                      align: 'right',
-                      padding: [0, 10, 0, 0]
-                    },
-                    rateHead: {
-                      color: '#333',
-                      width: 40,
-                      align: 'center',
-                      padding: [0, 10, 0, 0]
-                    }
-                  }
-                }
-              },
-              { value: 735, name: 'CityC' },
-              { value: 510, name: 'CityD' },
-              { value: 434, name: 'CityB' },
-              { value: 335, name: 'CityA' }
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }
-        ]
-      };
-  return (
-    <ReactECharts option={option}  />
-  )
-}
 
-export default PieChart
+const PieChart = ({ titleData, legend }) => {
+  const option = {
+    title: {
+      text: "Weather Statistics",
+      subtext: "Fake Data",
+      left: "center",
+    },
+    axisPointer: {
+      show: false,
+    },
+    legend: {
+      orient: "vertical",  // Arrange legend items vertically
+      left: 10,            // Position the legend on the left side
+      top: "middle",       // Align the legend in the middle vertically
+      data: ["CityA", "CityB", "CityD", "CityC", "CityE"],
+      textStyle: {
+        color: "#000",     // Customize text color if needed
+      },
+      itemWidth: 14,       // Width of legend color block
+      itemHeight: 14,      // Height of legend color block
+      formatter: function (name: any) {
+        return name;
+      },
+    },
+    series: [
+      {
+        type: "pie",
+        radius: "65%",
+        center: ["50%", "50%"],  // Adjust center to accommodate legend
+        selectedMode: "single",
+        data: [
+          { value: 735, name: "CityC" },
+          { value: 510, name: "CityD" },
+          { value: 434, name: "CityB" },
+          { value: 335, name: "CityA" },
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: "rgba(0, 0, 0, 0.5)",
+          },
+          label: {
+            show: true,  // Show labels on hover or click
+          },
+          labelLine: {
+            show: true,  // Show label lines on hover or click
+          },
+        },
+        label: {
+          show: false,  // Hide labels by default
+        },
+        labelLine: {
+          show: false,  // Hide label lines by default
+        },
+      },
+    ],
+  };
+  return <ReactECharts option={option} />;
+};
+
+export default PieChart;
