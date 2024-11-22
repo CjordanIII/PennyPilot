@@ -1,4 +1,4 @@
-import {mapConstraintTypes} from "@/lib/interfaces"
+import {mapConstraintTypes,MoneyStatus} from "@/lib/interfaces"
 
 
 export const socialMedia:mapConstraintTypes[]= [{
@@ -61,5 +61,29 @@ export const navBarMetaData:mapConstraintTypes[] = [
         src:"/assets/svgs/gear.svg",
         alt:"gear",
         href:"#"
+    }
+]
+
+export const moneyStatus:MoneyStatus[] = [
+    {
+        name:"Balance",
+        icon:"/assets/icons/money.svg",
+        alt:"money sign",
+        ballance:"N/A" 
+    },    {
+        name:"Savings",
+        icon:"/assets/icons/Wallet.svg",
+        alt:"money sign",
+        ballance:"N/A"
+    }  ,  {
+        name:"Estimated Income",
+        icon:"/assets/icons/download.svg",
+        alt:"money sign",
+        ballance:"N/A"
+    }   , {
+        name:"Expenses",
+        icon:"/assets/icons/upload.svg",
+        alt:"money sign",
+        ballance:"N/A"
     }
 ]

@@ -63,3 +63,10 @@ export interface PieData {
   value: number;
   name: string;
 }
+
+export interface MoneyStatus{
+  name:string,
+  icon:string,
+  alt:string,
+  ballance:string | number
+}
