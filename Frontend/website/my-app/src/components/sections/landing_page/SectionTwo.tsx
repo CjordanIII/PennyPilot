@@ -8,7 +8,7 @@ const SectionTwo = () => {
         <div className="w-11/12 z-0">
           <AiChatBot />
         </div>
-        <div className="bg-offwhite w-9/12 absolute h-full -z-10 left-96 overflow-x-hidden rounded-r-2xl shadow-sm" />
+        <div className="bg-white w-9/12 absolute h-full -z-10 left-96 overflow-x-hidden rounded-r-2xl shadow-sm" />
 
         <BotTitleAndDes />
       </div>

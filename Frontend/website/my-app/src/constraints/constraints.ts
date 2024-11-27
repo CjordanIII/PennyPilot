@@ -1,10 +1,4 @@
-interface mapConstraintTypes{
-    name:string,
-    src:string,
-    alt:string,
-    href:string
-}
-
+import {mapConstraintTypes} from "@/lib/interfaces"
 
 
 export const socialMedia:mapConstraintTypes[]= [{
@@ -36,35 +30,35 @@ export const socialMedia:mapConstraintTypes[]= [{
 export const navBarMetaData:mapConstraintTypes[] = [
     {
         name:"Overview",
-        src:"/assets/jpegs/xSocialIcon.jpg",
+        src:"/assets/svgs/squarelines.svg",
         alt:"square with lines",
         href:"#"
     },
     {
         name:"Chat",
-        src:"/assets/jpegs/xSocialIcon.jpg",
+        src:"/assets/svgs/comment.svg",
         alt:"chat",
         href:"#"
     },{
         name:"Savings Goals",
-        src:"/assets/jpegs/xSocialIcon.jpg",
+        src:"/assets/svgs/target.svg",
         alt:"target",
         href:"#"
     },{
         name:"Budget & Insights",
-        src:"/assets/jpegs/xSocialIcon.jpg",
+        src:"/assets/svgs/line.svg",
         alt:"graph",
         href:"#"
     },
     {
         name:"Expenses",
-        src:"/assets/jpegs/xSocialIcon.jpg",
+        src:"/assets/svgs/cash.svg",
         alt:"cash",
         href:"#"
     },
     {
         name:"Settings",
-        src:"/assets/jpegs/xSocialIcon.jpg",
+        src:"/assets/svgs/gear.svg",
         alt:"gear",
         href:"#"
     }

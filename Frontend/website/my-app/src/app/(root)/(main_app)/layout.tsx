@@ -11,12 +11,15 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+  
 }>) {
   return (
-    <main className="bg-whiteblue h-[100vh] w-full">
-      <div className="flex justify-between">
+    <main className="flex h-[100vh] w-[100vw] " >
+      <aside className="flex items-center  h-full">
         <SideNavBar />
-        {children}
+      </aside>
+      <div className=" w-full h-full  ">
+      {children}
       </div>
     </main>
   );
