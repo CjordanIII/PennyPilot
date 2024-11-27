@@ -18,6 +18,8 @@ input/*middleware.py
 input/*settings.py
 
 
+input/*.html
+
 
 # Environment variables and secrets
 *.env
@@ -104,3 +106,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
