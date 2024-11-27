@@ -48,11 +48,54 @@ class UserFinancials(models.Model):
 # views.py
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 import json
-from .models import User, SavingsGoal, Transaction, Budget, UserFinancials
+from .models import SavingsGoal, Transaction, Budget, UserFinancials
 from .ai_service import process_query
 from django.db.models import Sum
 from datetime import datetime, timedelta
+
+@csrf_exempt
+def register(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'error': 'Username already exists'}, status=400)
+        
+        user = User.objects.create_user(username=username, password=password)
+        UserFinancials.objects.create(user=user)
+        
+        return JsonResponse({'message': 'User registered successfully'})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def user_login(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'message': 'Login successful'})
+        else:
+            return JsonResponse({'error': 'Invalid credentials'}, status=401)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def user_logout(request):
+    if request.method == 'POST':
+        logout(request)
+        return JsonResponse({'message': 'Logout successful'})
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
 def search(request):
@@ -228,15 +271,22 @@ def get_gauge_chart_data(request):
 
 # urls.py
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
+    path('register/', views.register, name='register'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
     path('search/', views.search, name='search'),
     path('add_transaction/', views.add_transaction, name='add_transaction'),
     path('update_savings_goal/', views.update_savings_goal, name='update_savings_goal'),
     path('update_budget/', views.update_budget, name='update_budget'),
     path('line_chart_data/', views.get_line_chart_data, name='line_chart_data'),
     path('gauge_chart_data/', views.get_gauge_chart_data, name='gauge_chart_data'),
+    path('register/', views.register, name='register'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
 
 # ai_service.py

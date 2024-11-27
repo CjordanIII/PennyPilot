@@ -16,7 +16,7 @@ input/*.django
 input/*Ai.py
 input/*middleware.py
 input/*settings.py
-input/*secret.env
+
 
 
 # Environment variables and secrets
