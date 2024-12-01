@@ -1,10 +1,22 @@
-
-
 const Chat = () => {
-  const iconSize:number = 250
+  const iconSize: number = 200;
+  const xSize: number = 40;
   return (
-    <div className='text-center'><img src='pennypilet.svg' width={iconSize} height={iconSize} alt="logo"></img></div>
-  )
-}
+    <div className="my-5">
+      <div className="flex justify-around">
+        <img
+          src="pennypilet.svg"
+          width={iconSize}
+          height={iconSize}
+          alt="logo"
+        />
+        <button>
+          <img src="close.svg" width={xSize} height={xSize} alt="x" />
+        </button>
+      </div>
+      <hr className="my-5"/>
+    </div>
+  );
+};
 
-export default Chat
+export default Chat;

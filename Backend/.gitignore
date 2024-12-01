@@ -1,8 +1,39 @@
 *.ts
 *.json
-
+.env
+myenv
 venv/
 input/*.django
 input/*Ai.py
 input/*middleware.py
 input/*settings.py
+
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+# Environment variables #
+.env
+
+# Django static and media files #
+staticfiles/
+media/
+
+# Django SQL database #
+*.sqlite3
+
+# VS Code #
+.vscode/
+
+# PyCharm #
+.idea/
+
+# macOS #
+.DS_Store
+
+# Windows #
+Thumbs.db
