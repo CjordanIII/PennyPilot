@@ -1,3 +1,6 @@
+import ChatContainer from "./chat/ChatContainer";
+
+
 const Chat = () => {
   const iconSize: number = 200;
   const xSize: number = 40;
@@ -15,6 +18,7 @@ const Chat = () => {
         </button>
       </div>
       <hr className="my-5"/>
+      <ChatContainer/>
     </div>
   );
 };
