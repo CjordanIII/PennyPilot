@@ -1,8 +1,8 @@
-import { v4 as uuidv4 } from 'uuid';
+
 import AI from './ai.class';
 import Human from './human.class';
 
-export class Chat {
+ class Chat {
   private ai: AI;
   private human: Human;
 
@@ -20,13 +20,13 @@ export class Chat {
   }
 }
 
-
+export default Chat
 
 
 
 // Example usage:
-const ai = new AI("Copilot");
-const human = new Human("John");
-const chat = new Chat(ai, human);
+// const ai = new AI("Copilot");
+// const human = new Human("John");
+// const chat = new Chat(ai, human);
 
-chat.startConversation();
+// chat.startConversation();

@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    width:400px;
-    height:600px;
+body {
+  width: 400px;
+  height: 600px;
+
+  background-color:  #F5FAFF;
 }

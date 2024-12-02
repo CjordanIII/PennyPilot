@@ -5,7 +5,7 @@ const Chat = () => {
   const iconSize: number = 200;
   const xSize: number = 40;
   return (
-    <div className="my-5">
+    <div className="my-5 ">
       <div className="flex justify-around">
         <img
           src="pennypilet.svg"
