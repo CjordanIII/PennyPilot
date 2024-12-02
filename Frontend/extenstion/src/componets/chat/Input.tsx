@@ -6,7 +6,7 @@ const Input = () => {
     <div className="flex justify-center relative">
       <input
         name="humaninput"
-        className="w-3/4 p-2 rounded-full border-[#DFEFFF] border-solid border-2 
+        className="w-4/5 p-2 rounded-full border-[#DFEFFF] border-solid border-2 
         outline-[#DFEFFF]
         focus:border-blue-500"
       />
